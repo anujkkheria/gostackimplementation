@@ -11,9 +11,9 @@ type Heap interface {
 	Peek() int
 	bubbleup(i int)
 	heapify()
-	getleft() int
-	getright() int
-	getParent() (int, error)
+	getleft(idx int) int
+	getright(idx int) int
+	getParenint(idx int) (int, error)
 	getlen() int
 }
 
@@ -25,20 +25,20 @@ func NewHeap() HeapImpl {
 	return HeapImpl{}
 }
 
-func (h *HeapImpl) getParent(ind int) (int, error) {
-	if ind == 0 {
+func (h *HeapImpl) getParent(idx int) (int, error) {
+	if idx == 0 {
 		return 0, errors.New("root cannot have parent")
 	}
-	return ind / 2, nil
+	return idx / 2, nil
 }
 
-func (h *HeapImpl) bubbleup(ind int)  {
-	paridx, err := h.getParent(ind)
+func (h *HeapImpl) bubbleup(idx int)  {
+	paridx, err := h.getParent(idx)
 	if err != nil{
 		return
 	}
-	if h.items[paridx] > h.items[ind]{
-		h.items[paridx],h.items[ind] = h.items[ind], h.items[paridx]
+	if h.items[paridx] > h.items[idx]{
+		h.items[paridx],h.items[idx] = h.items[idx], h.items[paridx]
 		h.bubbleup(paridx)
 	}
 }
